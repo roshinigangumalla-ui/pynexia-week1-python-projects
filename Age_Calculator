@@ -1,0 +1,45 @@
+
+from datetime import date
+import calendar
+
+print("===== AGE CALCULATOR =====")
+
+dob = input("Enter your Date of Birth (YYYY-MM-DD): ")
+
+try:
+    birth_date = date.fromisoformat(dob)
+    today = date.today()
+
+    if birth_date > today:
+        print("Invalid Date of Birth")
+
+    else:
+        years = today.year - birth_date.year
+        months = today.month - birth_date.month
+        days = today.day - birth_date.day
+
+        if days < 0:
+            months -= 1
+
+            if today.month == 1:
+                previous_month = 12
+                previous_year = today.year - 1
+            else:
+                previous_month = today.month - 1
+                previous_year = today.year
+
+            days += calendar.monthrange(
+                previous_year, previous_month
+            )[1]
+
+        if months < 0:
+            years -= 1
+            months += 12
+
+        print("\nYour Age:")
+        print("Years:", years)
+        print("Months:", months)
+        print("Days:", days)
+
+except ValueError:
+    print("Please enter a valid date!")
